@@ -36,8 +36,13 @@ class _UnitPageState extends State<UnitPage> {
             Kind
             Class{
               ClassInit{
+                ClassID
                 Name
                 NickName
+                BattleStyle{
+                  Data_ID
+                  Type_BattleStyle
+                }
               }
             }
           }
@@ -59,7 +64,17 @@ class _UnitPageState extends State<UnitPage> {
           final List<dynamic> units = [];
           // TODO: 根据彩蛋默认屏蔽一些数据
           // 默认不显示非单位的东西（还需要完善）
-          units.addAll(units_raw.where((i) => i['Kind'] < 2));
+          // 把它们挪到filter.dart里去
+          units.addAll(units_raw.where((i) {
+            var kind = i['Kind'];
+            var classID = i['Class']['ClassInit']['ClassID'];
+            var className = i['Class']['ClassInit']['Name'] as String;
+            var name = i['Name'];
+            return kind < 2 &&
+                (classID < 40000 || classID > 100000) &&
+                !className.contains('分身') &&
+                !name.contains('ダミー');
+          }));
           units.sort((a, b) => (b['CardID'] as int).compareTo(a['CardID']));
           if (first) {
             // TODO: 使用默认检索规则

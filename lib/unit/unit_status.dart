@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import './info_model.dart';
+import './Widget//unit_info.dart';
+
+// 根据选择的不同职业，渲染不同的属性
+// 这里要根据职业，技能，被动，好感加成来综合计算属性
 
 class UnitStatus extends StatefulWidget {
   // 0: 初始
@@ -16,7 +20,8 @@ class UnitStatus extends StatefulWidget {
 }
 
 class _UnitStatusState extends State<UnitStatus> {
-  var isMax = false;
+  var isMax = true;
+  final status = Status();
   @override
   Widget build(BuildContext context) {
     var imageMap = [
@@ -26,6 +31,9 @@ class _UnitStatusState extends State<UnitStatus> {
       (widget.unit['ImageStand'] as List<dynamic>).length > 2 ? 2 : 1,
       (widget.unit['ImageStand'] as List<dynamic>).length > 2 ? 3 : 1,
     ];
+    var unitInfo = UnitInfo(widget.unit, widget.selectedClass, isMax, status);
+
+    // 返回Widget
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,10 +44,10 @@ class _UnitStatusState extends State<UnitStatus> {
                 'http://assets.millennium-war.net${widget.unit['ImageStand'][imageMap[widget.selectedClass]]}',
             placeholder: (context, url) => Container(
               child: Center(child: CircularProgressIndicator()),
-              height: 500,
+              height: 400,
             ),
             errorWidget: (context, url, error) => Icon(Icons.error),
-            height: 500,
+            height: 400,
           ),
           // 切换开关
           Center(
@@ -59,11 +67,11 @@ class _UnitStatusState extends State<UnitStatus> {
               ],
             ),
           ),
-          // 内容
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[],
-          )
+          // 单位面板
+          UnitInfoWidget(unitInfo),
+          // 职业信息
+          // 被动信息
+          // 技能信息
         ],
       ),
     );

@@ -62,6 +62,7 @@ class UnitInfo extends StatelessWidget {
                       // 初始职业
                       Text(unit['Class']['ClassInit']['Name']),
                       // 种族
+                      Text('${unit['Race']}')
                     ],
                   ),
                 ),

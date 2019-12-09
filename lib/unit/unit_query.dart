@@ -140,6 +140,16 @@ fragment class on Class {
   Data_ExtraAwakeOrb {
     Name
   }
+  BattleStyle{
+    Type_BattleStyle
+    _Param_01
+    _Param_02
+    _Range_01
+    _Range_02
+    _Range_03
+    _Range_04
+    _Range_05
+  }
 }
 
 fragment ability on Ability {
