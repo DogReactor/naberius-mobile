@@ -60,9 +60,9 @@ class UnitInfo extends StatelessWidget {
                       // 稀有度
                       Rare(unit['Rare']),
                       // 初始职业
-                      Text(unit['Class']['ClassInit']['Name']),
+                      Text(unit['Classes'][0]['Name']),
                       // 种族
-                      Text('${unit['Race']}')
+                      Text('${unit['RaceName']}')
                     ],
                   ),
                 ),

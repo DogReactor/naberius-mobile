@@ -98,5 +98,6 @@ class UnitInfoWidget extends StatelessWidget {
         children: statusWidgets,
       ),
     );
+    return statusWidget;
   }
 }

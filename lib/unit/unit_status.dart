@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import './info_model.dart';
-import './Widget//unit_info.dart';
+import './Widget/unit_info.dart';
 
 // 根据选择的不同职业，渲染不同的属性
 // 这里要根据职业，技能，被动，好感加成来综合计算属性
@@ -24,15 +24,8 @@ class _UnitStatusState extends State<UnitStatus> {
   final status = Status();
   @override
   Widget build(BuildContext context) {
-    var imageMap = [
-      0,
-      0,
-      (widget.unit['ImageStand'] as List<dynamic>).length > 1 ? 1 : 0,
-      (widget.unit['ImageStand'] as List<dynamic>).length > 2 ? 2 : 1,
-      (widget.unit['ImageStand'] as List<dynamic>).length > 2 ? 3 : 1,
-    ];
+    var currentClass = widget.unit['Classes'][widget.selectedClass];
     var unitInfo = UnitInfo(widget.unit, widget.selectedClass, isMax, status);
-
     // 返回Widget
     return Container(
       child: Column(
@@ -41,7 +34,7 @@ class _UnitStatusState extends State<UnitStatus> {
           // 立绘
           CachedNetworkImage(
             imageUrl:
-                'http://assets.millennium-war.net${widget.unit['ImageStand'][imageMap[widget.selectedClass]]}',
+                'http://assets.millennium-war.net${currentClass['ImageStand']}',
             placeholder: (context, url) => Container(
               child: Center(child: CircularProgressIndicator()),
               height: 400,

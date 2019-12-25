@@ -1,10 +1,4 @@
-const classMap = [
-  'ClassInit',
-  'ClassCC',
-  'ClassEvo',
-  'ClassEvo2a',
-  'ClassEvo2b'
-];
+const classMap = ['Init', 'CC', 'Evo', 'Evo2a', 'Evo2b'];
 
 class Status {
   bool enableAbility = true;
@@ -32,10 +26,10 @@ class UnitInfo {
 
   UnitInfo(dynamic unit, int selectedClass, bool max, Status status) {
     // 先计算等级吧
-    this.currentClass = unit['Class'][classMap[selectedClass]];
+    this.currentClass = unit['Classes'][selectedClass];
     var maxLevel = currentClass['MaxLevelUnit'];
     var classMaxLevel = currentClass['MaxLevel'];
-    var initClass = unit['Class']['ClassInit'];
+    var initClass = unit['Classes'][0];
     this.level = max ? maxLevel : 1;
     this.bonus = UnitBonus(unit, selectedClass);
     // 计算不包含bonus的属性
@@ -142,13 +136,11 @@ class UnitBonus {
     if (unit['Rare'] >= 10) {
       c = 1 / 1.2;
     } else {
-      c = (selectedClass == 0 && unit['Class']['ClassCC'] != null)
-          ? 2
-          : (1 / 1.2);
+      c = (selectedClass == 0 && unit['Classes'][1] != null) ? 2 : (1 / 1.2);
     }
     addBonus(unit['BonusType'], (unit['BonusNum'] / c as double).round());
     addBonus(unit['BonusType2'], (unit['BonusNum2'] / c as double).round());
-    if (!(selectedClass == 0 && unit['Class']['ClassCC'] != null)) {
+    if (!(selectedClass == 0 && unit['Classes'][1] != null)) {
       addBonus(unit['BonusType3'], unit['BonusNum3']);
     }
   }

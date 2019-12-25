@@ -27,22 +27,20 @@ class _UnitPageState extends State<UnitPage> {
         options: QueryOptions(
           document: """
         {
-          cards{
+          Cards {
             Name
             CardID
             Rare
-            NickName
-            Race
+            NickNames
+            RaceName
             Kind
-            Class{
-              ClassInit{
-                ClassID
-                Name
-                NickName
-                BattleStyle{
-                  Data_ID
-                  Type_BattleStyle
-                }
+            Classes {
+              ClassID
+              Name
+              NickNames
+              BattleStyle{
+                Data_ID
+                Type_BattleStyle
               }
             }
           }
@@ -60,15 +58,15 @@ class _UnitPageState extends State<UnitPage> {
           if (result.loading) {
             return Center(child: const CircularProgressIndicator());
           }
-          final List<dynamic> units_raw = result.data['cards'];
+          final List<dynamic> units_raw = result.data['Cards'];
           final List<dynamic> units = [];
           // TODO: 根据彩蛋默认屏蔽一些数据
           // 默认不显示非单位的东西（还需要完善）
           // 把它们挪到filter.dart里去
           units.addAll(units_raw.where((i) {
             var kind = i['Kind'];
-            var classID = i['Class']['ClassInit']['ClassID'];
-            var className = i['Class']['ClassInit']['Name'] as String;
+            var classID = i['Classes'][0]['ClassID'];
+            var className = i['Classes'][0]['Name'] as String;
             var name = i['Name'];
             return kind < 2 &&
                 (classID < 40000 || classID > 100000) &&
@@ -138,13 +136,13 @@ class _UnitPageState extends State<UnitPage> {
                                 final l = [];
                                 l.add(i['Name']);
                                 l.add(i['Race']);
-                                l.add(i['Class']['ClassInit']['Name']);
-                                if (i['NickName'] != null) {
-                                  l.addAll(i['NickName']);
+                                l.add(i['Classes'][0]['Name']);
+                                if (i['NickNames'] != null) {
+                                  l.addAll(i['NickNames']);
                                 }
-                                if (i['Class']['ClassInit']['NickName'] !=
+                                if (i['Classes'][0]['NickNames'] !=
                                     null) {
-                                  l.addAll(i['Class']['ClassInit']['NickName']);
+                                  l.addAll(i['Classes'][0]['NickNames']);
                                 }
                                 final s = l.join(' ');
                                 return s.contains(text);

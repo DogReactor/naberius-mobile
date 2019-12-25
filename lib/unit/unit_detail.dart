@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:naberius_mobile/unit/Widget/unit_phase.dart';
+import 'package:naberius_mobile/unit/util.dart';
 import './unit_query.dart';
 import './unit_status.dart';
 import './rare.dart';
@@ -38,7 +38,7 @@ class _UnitDetailInfoState extends State<UnitDetailInfo> {
           if (result.loading) {
             return Center(child: const CircularProgressIndicator());
           }
-          final unit = result.data['card'];
+          final unit = unitClassPerTreat(result.data['Card']);
 
           return ListView(
             padding: EdgeInsets.all(15.0),
@@ -56,7 +56,7 @@ class _UnitDetailInfoState extends State<UnitDetailInfo> {
               // 种族
               Center(
                 child: Text(
-                  '${unit['Race']}',
+                  '种族：${unit['RaceName']}',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
@@ -64,7 +64,7 @@ class _UnitDetailInfoState extends State<UnitDetailInfo> {
               // TODO: 这个可以点
               Center(
                 child: Text(
-                  'Illust: ${unit['Illust']}',
+                  'Illust: ${unit['IllustName']}',
                   style: TextStyle(fontSize: 16),
                 ),
               ),

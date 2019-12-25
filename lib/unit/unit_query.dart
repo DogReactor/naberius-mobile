@@ -1,35 +1,15 @@
 const UnitQuery = """
 query unit(\$id: Int!) {
-  card(CardID: \$id) {
+   Card(CardID: \$id) {
     CardID
-    Class {
-      ClassInit {
-        ...class
-      }
-      ClassEvo2b {
-        ...class
-      }
-      ClassCC {
-        ...class
-      }
-      ClassEvo {
-        ...class
-      }
-      ClassEvo2a {
-        ...class
-      }
-      ClassEvo2b {
-        ...class
-      }
+    Classes {
+			...class
     }
-    SkillInit {
-      ...skill
-    }
-    SkillCC {
-      ...skill
-    }
-    SkillEvo {
-      ...skill
+    Skills {
+      Type
+      Skills{
+        ...skill
+      }
     }
     Rare
     SellPrice
@@ -45,25 +25,21 @@ query unit(\$id: Int!) {
     MaxHPMod
     AtkMod
     DefMod
-    Illust
+    IllustName
     MagicResistance
-    AbilityInitInfo {
-      ...ability
-    }
-    AbilityEvoInfo {
+    Abilities {
       ...ability
     }
     Kind
-    Race
-    Assign
+    RaceName
+    AssignName
     Identity
     Flavor
     Name
     ImageStand
     ImageCG
-    NickName
+    NickNames
     ConneName
-    Talks
     _AwakePattern
     _TradePoint
   }
@@ -80,14 +56,13 @@ fragment skill on Skill {
   LevelMax
   SkillType
   Text
-  InfluenceConfig {
+  Configs {
     Data_ID
     Type_Collision
     Type_CollisionState
     Type_ChangeFunction
     Data_Target
     Data_InfluenceType
-    Description
     Data_MulValue
     Data_MulValue2
     Data_MulValue3
@@ -102,7 +77,6 @@ fragment class on Class {
   ClassID
   Name
   MaxLevel
-  MaxLevelUnit
   Cost
   InitHP
   MaxHP
@@ -119,8 +93,9 @@ fragment class on Class {
   Explanation
   AwakeType1
   AwakeType2
-  NickName
-  ClassAbilityConfig1 {
+  NickNames
+  Type
+  ClassAbilityConfigs {
     _ConfigID
     _InvokeType
     _TargetType
@@ -131,13 +106,12 @@ fragment class on Class {
     _Param4
     _Command
     _ActivateCommand
-    Description
   }
   ClassAbilityPower1
-  JobChangeMaterial {
+  JobChangeMaterials {
     Name
   }
-  Data_ExtraAwakeOrb {
+  Data_ExtraAwakeOrbs {
     Name
   }
   BattleStyle{
@@ -157,7 +131,7 @@ fragment ability on Ability {
   AbilityPower
   AbilityType
   Text
-  Config {
+  Configs {
     _ConfigID
     _InvokeType
     _TargetType
@@ -168,7 +142,6 @@ fragment ability on Ability {
     _Param4
     _Command
     _ActivateCommand
-    Description
   }
   AbilityID
 }
