@@ -38,9 +38,12 @@ unitClassPerTreat(unit) {
     v['ImageStand'] = unit['ImageStand'][imageTable[index]];
     // 图标index
     v['IconIndex'] = iconTable[index];
+    v['TypeText'] = classTextConst[index];
     // 是否渲染
     v['IsRenderer'] = true;
-    v['TypeText'] = classTextConst[index];
+    if (rare > 10 && index < 2) {
+      v['IsRenderer'] = false;
+    }
     if (rare < 10 &&
         index > 2 &&
         awakePattern != 3 &&
