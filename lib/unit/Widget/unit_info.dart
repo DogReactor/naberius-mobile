@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../info_model.dart';
+import '../model/info_model.dart';
 import './unit_info_row.dart';
 
 class UnitInfoWidget extends StatelessWidget {

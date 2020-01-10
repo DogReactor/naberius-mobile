@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../info_model.dart';
+import '../model/info_model.dart';
 
 class UnitClass extends StatelessWidget {
   UnitInfo unitinfo;

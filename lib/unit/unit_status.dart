@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import './info_model.dart';
+import './model/info_model.dart';
 import './Widget/unit_info.dart';
 
 // 根据选择的不同职业，渲染不同的属性
