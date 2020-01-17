@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:naberius_mobile/unit/Widget/unit_ability.dart';
+import 'package:naberius_mobile/unit/Widget/unit_bouns.dart';
+import 'package:naberius_mobile/unit/Widget/unit_class.dart';
+import 'package:naberius_mobile/unit/Widget/unit_skill.dart';
 import './model/info_model.dart';
 import './Widget/unit_info.dart';
 
@@ -60,11 +64,20 @@ class _UnitStatusState extends State<UnitStatus> {
               ],
             ),
           ),
+          // 好感奖励
+          UnitBonusWidget(widget.unit),
+          Text(
+            '*本页所有数值均已包含好感奖励',
+            style: TextStyle(fontSize: 12, color: Colors.black45),
+          ),
           // 单位面板
           UnitInfoWidget(unitInfo),
           // 职业信息
+          UnitClass(unitInfo),
           // 被动信息
+          UnitAbility(unitInfo),
           // 技能信息
+          UnitSkill(unitInfo, widget.unit, widget.selectedClass),
         ],
       ),
     );

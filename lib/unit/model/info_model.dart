@@ -20,12 +20,15 @@ class UnitInfo {
   int attackWait = 0;
   int maxTarget = 0;
   int costDec = 0;
+  dynamic unit;
   // true为近战，false为远程
   bool classType = true;
+  UnitBuff unitBuff = new UnitBuff();
   UnitBonus bonus;
 
   UnitInfo(dynamic unit, int selectedClass, bool max, Status status) {
     // 先计算等级吧
+    this.unit = unit;
     this.currentClass = unit['Classes'][selectedClass];
     var maxLevel = currentClass['MaxLevelUnit'];
     var classMaxLevel = currentClass['MaxLevel'];
@@ -65,13 +68,12 @@ class UnitInfo {
     this.maxTarget = currentClass['MaxTarget'];
     if ((currentClass['ClassID'] >= 10000 && currentClass['ClassID'] < 20000) ||
         (currentClass['ClassID'] >= 30000)) this.classType = false;
-    // 计算职业加成
+    // TODO:
+    // 计算职业加成(应该都写在职业里了吧)
 
-    // 计算被动加成
-    // 有些是直接加在面板上的，就按照WIKI来
-    // 不在列表里的，留作选项让用户开启
+    // 计算被动加成(先翻翻WIKI)
 
-    // 计算技能加成
+    // 计算技能加成(遥远的计划)
   }
 }
 
@@ -124,7 +126,7 @@ class UnitBonus {
           this.skillTime += value;
           break;
         case 8: // 8 技能CD
-          this.skillCD -= value;
+          this.skillCD = value;
           break;
         case 9: // 9 物理攻击回避
           this.miss += value;
@@ -132,16 +134,29 @@ class UnitBonus {
       }
     }
 
+    // 银单位一下直接返回
+    if (unit['Rare'] < 2) return;
+    // 好感奖励系数
     double c;
-    if (unit['Rare'] >= 10) {
+    isChibi() {
+      return unit['Rare'] == 3 && unit['Classes'].length == 1;
+    }
+
+    if (unit['Rare'] >= 10 || isChibi()) {
       c = 1 / 1.2;
     } else {
-      c = (selectedClass == 0 && unit['Classes'][1] != null) ? 2 : (1 / 1.2);
+      c = (selectedClass == 0 && unit['hasCC']) ? 2 : (1 / 1.2);
     }
     addBonus(unit['BonusType'], (unit['BonusNum'] / c as double).round());
     addBonus(unit['BonusType2'], (unit['BonusNum2'] / c as double).round());
-    if (!(selectedClass == 0 && unit['Classes'][1] != null)) {
+    if (isChibi() || (!(selectedClass == 0 && unit['hasCC']))) {
       addBonus(unit['BonusType3'], unit['BonusNum3']);
     }
   }
+}
+
+class UnitBuff {
+  double atkMulit = 0.0;
+  double defMulit = 0.0;
+  double hpMulit = 0.0;
 }

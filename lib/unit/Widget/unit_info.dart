@@ -23,22 +23,22 @@ class UnitInfoWidget extends StatelessWidget {
       UnitStatusRow(
         left: 'HP',
         right: unitInfo.hp + unitInfo.bonus.hp,
-        additional: unitInfo.bonus.hp,
+        red: unitInfo.bonus.hp != 0,
       ),
       UnitStatusRow(
         left: '攻击力',
         right: unitInfo.atk + unitInfo.bonus.atk,
-        additional: unitInfo.bonus.atk,
+        red: unitInfo.bonus.atk != 0,
       ),
       UnitStatusRow(
         left: '防御力',
         right: unitInfo.def + unitInfo.bonus.def,
-        additional: unitInfo.bonus.def,
+        red: unitInfo.bonus.def != 0,
       ),
       UnitStatusRow(
         left: '魔法抗性',
         right: unitInfo.resist + unitInfo.bonus.resist,
-        additional: unitInfo.bonus.resist,
+        red: unitInfo.bonus.resist != 0,
       ),
     ];
     if (unitInfo.classType) {
@@ -48,21 +48,20 @@ class UnitInfoWidget extends StatelessWidget {
         right: unitInfo.block,
       ));
     }
-    if (unitInfo.range > 40) {
+    if (unitInfo.range > 40 || !unitInfo.classType) {
       // 如果射程大于40，显示射程
       statusWidgets.add(UnitStatusRow(
         left: '射程',
         right: unitInfo.range + unitInfo.bonus.range,
-        additional: unitInfo.bonus.range,
+        red: unitInfo.bonus.range != 0,
       ));
     }
     statusWidgets.addAll([
       UnitStatusRow(
-        left: '攻击后摇',
-        right: (unitInfo.attackWait * (1 + unitInfo.bonus.stuck / 100)).ceil(),
-        additionalString:
-            unitInfo.bonus.stuck == 0 ? '' : "${unitInfo.bonus.stuck}%",
-      ),
+          left: '攻击后摇',
+          right:
+              (unitInfo.attackWait * (1 + unitInfo.bonus.stuck / 100)).ceil(),
+          red: unitInfo.bonus.stuck != 0),
       UnitStatusRow(
         left: '攻击目标数',
         right: unitInfo.maxTarget,
@@ -88,10 +87,6 @@ class UnitInfoWidget extends StatelessWidget {
             ))
         .values
         .toList();
-    statusWidgets.add(Text(
-      '*以上数值均已包含好感奖励',
-      style: TextStyle(fontSize: 12, color: Colors.black45),
-    ));
     // 包装人物面板组件
     var statusWidget = Container(
       child: Column(

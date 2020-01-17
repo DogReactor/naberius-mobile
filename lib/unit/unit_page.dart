@@ -77,7 +77,6 @@ class _UnitPageState extends State<UnitPage> {
           if (first) {
             // TODO: 使用默认检索规则
             unitsList.addAll(units);
-            // unitsList.addAll(units);
             first = false;
           }
           var listView = ListView.builder(
@@ -124,7 +123,6 @@ class _UnitPageState extends State<UnitPage> {
                             if (text == '') {
                               setState(() {
                                 unitsList.clear();
-                                //FIXME: 使用和初次加载同样的检索规则
                                 unitsList.addAll(units);
                               });
                               return;

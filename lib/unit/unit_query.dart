@@ -131,6 +131,7 @@ fragment ability on Ability {
   AbilityPower
   AbilityType
   Text
+  Type
   Configs {
     _ConfigID
     _InvokeType

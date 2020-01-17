@@ -7,6 +7,7 @@ class UnitStatusRow extends StatelessWidget {
   final dynamic right;
   final String additionalString;
   final int additional;
+  bool red;
   final OnTap onTap;
   UnitStatusRow({
     this.left,
@@ -14,13 +15,14 @@ class UnitStatusRow extends StatelessWidget {
     this.additional,
     this.additionalString,
     this.onTap,
+    this.red = false,
   });
   @override
   Widget build(BuildContext context) {
     // 右边文字的Style
     TextStyle ts;
     if (onTap == null) {
-      ts = TextStyle(fontSize: 18, color: Colors.black);
+      ts = TextStyle(fontSize: 18, color: red ? Colors.red : Colors.black);
     } else {
       ts = TextStyle(
           fontSize: 18,

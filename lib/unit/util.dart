@@ -10,7 +10,10 @@ const classTypeToIndex = {'Init': 0, 'CC': 1, 'Evo': 2, 'Evo2a': 3, 'Evo2b': 4};
 const classTextConst = ['初始', '转职', '觉醒', '二觉A', '二觉B'];
 
 unitClassPerTreat(unit) {
-  final classes = unit['Classes'] as List<dynamic>;
+  if (unit['Rare'] == 2) {
+    unit['Classes'] = unit['Classes'].sublist(0, 2);
+  }
+  var classes = unit['Classes'] as List<dynamic>;
   // 使用的Icon编号（为了处理该进阶下没有立绘的问题）
   final imageStandLength = (unit['ImageStand'] as List<dynamic>).length;
   final iconTable = [
@@ -28,6 +31,10 @@ unitClassPerTreat(unit) {
     imageStandLength > 2 ? (imageStandLength > 3 ? 3 : 2) : 1,
   ];
   final awakePattern = unit['_AwakePattern'];
+  unit['hasCC'] = false;
+  if (classes.length > 1 && classes[1]['Type'] == 'CC') {
+    unit['hasCC'] = true;
+  }
   classes.forEach((v) {
     final type = v['Type'];
     final index = classTypeToIndex[type];
